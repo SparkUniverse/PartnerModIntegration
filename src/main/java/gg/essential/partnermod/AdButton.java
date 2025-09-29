@@ -52,6 +52,8 @@ public class AdButton extends GuiButton {
     public static ResourceLocation TEXTURE_MULTIPLAYER = Resources.load("button_multiplayer.png");
     public static ResourceLocation TEXTURE_SINGLEPLAYER = Resources.load("button_singleplayer.png");
 
+    // Note: Other mods may rely on this label to identify the button.
+    private static final String LABEL = "<essential_partner_integration_button>";
     private static final int BUTTON_ID = 0xe4c164f1;
 
     private final ResourceLocation texture;
@@ -62,13 +64,13 @@ public class AdButton extends GuiButton {
 
     public AdButton(int x, int y, ResourceLocation texture, Consumer<GuiButton> onPress, String tooltip) {
         //#if MC>=11903
-        //$$ super(x, y, 20, 20, Text.empty(), onPress::accept, ButtonWidget.DEFAULT_NARRATION_SUPPLIER);
+        //$$ super(x, y, 20, 20, Text.literal(LABEL), onPress::accept, ButtonWidget.DEFAULT_NARRATION_SUPPLIER);
         //#elseif MC>=11900
-        //$$ super(x, y, 20, 20, Text.empty(), onPress::accept);
+        //$$ super(x, y, 20, 20, Text.literal(LABEL), onPress::accept);
         //#elseif MC>=11600
-        //$$ super(x, y, 20, 20, StringTextComponent.EMPTY, onPress::accept);
+        //$$ super(x, y, 20, 20, new StringTextComponent(LABEL), onPress::accept);
         //#else
-        super(BUTTON_ID, x, y, 20, 20, "");
+        super(BUTTON_ID, x, y, 20, 20, LABEL);
         //#endif
         this.texture = texture;
         this.tooltip = tooltip;
