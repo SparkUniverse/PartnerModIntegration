@@ -166,12 +166,21 @@ public class ModalManager {
     //$$         ScreenEvents.afterRender(screen).register((screen1, matrices, mouseX, mouseY, tickDelta) -> {
     //$$             handleDraw(matrices);
     //$$         });
+    //#if MC>=12109
+    //$$         ScreenMouseEvents.allowMouseClick(screen).register((screen1, click) -> {
+    //$$             return !handleMouseClick(click.x(), click.y());
+    //$$         });
+    //$$         ScreenKeyboardEvents.allowKeyPress(screen).register((screen1, keyInput) -> {
+    //$$             return !handleKeyTyped(keyInput.key());
+    //$$         });
+    //#else
     //$$         ScreenMouseEvents.allowMouseClick(screen).register((screen1, mouseX, mouseY, button) -> {
     //$$             return !handleMouseClick(mouseX, mouseY);
     //$$         });
     //$$         ScreenKeyboardEvents.allowKeyPress(screen).register((screen1, key, scancode, modifiers) -> {
     //$$             return !handleKeyTyped(key);
     //$$         });
+    //#endif
     //$$     }));
     //$$ }
     //#else
