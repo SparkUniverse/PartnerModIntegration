@@ -29,7 +29,9 @@ import net.minecraft.client.Minecraft;
 //#else
 import net.minecraftforge.client.event.GuiScreenEvent;
 //#endif
+//#if MC<12107
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+//#endif
 //#endif
 
 //#if MC>=12000
@@ -182,7 +184,11 @@ public class ModalManager {
     //$$ }
     //#else
     //#if MC>=11900
+    //#if FORGE && MC>=12107
+    //$$ { ScreenEvent.Render.Post.BUS.addListener(this::draw); }
+    //#else
     //$$ @SubscribeEvent
+    //#endif
     //$$ public void draw(ScreenEvent.Render.Post event) {
         //#if MC>=12000
         //$$ handleDraw(event.getGuiGraphics());
@@ -191,6 +197,17 @@ public class ModalManager {
         //#endif
     //$$ }
     //$$
+    //#if FORGE && MC>=12107
+    //$$ { ScreenEvent.MouseButtonPressed.Pre.BUS.addListener(this::mouseClicked); }
+    //$$ private boolean mouseClicked(ScreenEvent.MouseButtonPressed.Pre event) {
+    //$$     return handleMouseClick(event.getMouseX(), event.getMouseY());
+    //$$ }
+    //$$
+    //$$ { ScreenEvent.KeyPressed.Pre.BUS.addListener(this::keyPressed); }
+    //$$ private boolean keyPressed(ScreenEvent.KeyPressed.Pre event) {
+    //$$     return handleKeyTyped(event.getKeyCode());
+    //$$ }
+    //#else
     //$$ @SubscribeEvent
     //$$ public void mouseClicked(ScreenEvent.MouseButtonPressed.Pre event) {
     //$$     event.setCanceled(handleMouseClick(event.getMouseX(), event.getMouseY()));
@@ -200,6 +217,7 @@ public class ModalManager {
     //$$ public void keyPressed(ScreenEvent.KeyPressed.Pre event) {
     //$$     event.setCanceled(handleKeyTyped(event.getKeyCode()));
     //$$ }
+    //#endif
     //#elseif MC>=11800
     //$$ @SubscribeEvent
     //$$ public void draw(ScreenEvent.DrawScreenEvent.Post event) {

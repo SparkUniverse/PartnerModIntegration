@@ -49,7 +49,9 @@ import java.util.stream.Collectors;
 
 //#if FORGE
 import net.minecraftforge.common.MinecraftForge;
+//#if MC<12107
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+//#endif
 
 //#if MC>=11600
 //#else
@@ -96,7 +98,7 @@ public class EssentialPartner {
         "1.18.2",
         "1.19.2", "1.19.3", "1.19.4",
         "1.20.1", "1.20.2", "1.20.4", "1.20.6",
-        "1.21.1", "1.21.3", "1.21.4", "1.21.5"
+        "1.21.1", "1.21.3", "1.21.4", "1.21.5", "1.21.7", "1.21.8"
     ));
 
     private static final Set<String> MAIN_MENU_BUTTONS = new HashSet<>(Collections.singletonList("menu.multiplayer"));
@@ -146,8 +148,13 @@ public class EssentialPartner {
         //$$ NeoForge.EVENT_BUS.register(this);
         //$$ NeoForge.EVENT_BUS.register(ModalManager.INSTANCE);
         //#elseif FORGE
+        //#if MC>=12107
+        //$$ // Events are now registered via `addListener` calls in constructor
+        //$$ ModalManager.INSTANCE.getClass();
+        //#else
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(ModalManager.INSTANCE);
+        //#endif
         //#else
         //$$ ScreenEvents.AFTER_INIT.register(this::afterScreenInit);
         //$$ ModalManager.INSTANCE.registerEvents();
@@ -286,7 +293,11 @@ public class EssentialPartner {
     }
 
     //#if FORGELIKE
+    //#if FORGE && MC>=12107
+    //$$ { ScreenEvent.Init.Post.BUS.addListener(this::screenInitEvent); }
+    //#else
     @SubscribeEvent
+    //#endif
     public void screenInitEvent(
         //#if MC>=11900
         //$$ ScreenEvent.Init.Post event
