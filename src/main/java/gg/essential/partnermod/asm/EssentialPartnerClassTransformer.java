@@ -97,14 +97,13 @@ public class EssentialPartnerClassTransformer implements IClassTransformer {
             classNode.accept(writer);
             return writer.toByteArray();
         }
-        if (transformedName.equals("net.minecraft.client.gui.GuiScreen")) {
+        if (transformedName.equals("net.minecraftforge.client.ForgeHooksClient")) {
             ClassNode classNode = new ClassNode();
             ClassReader reader = new ClassReader(basicClass);
             reader.accept(classNode, 0);
 
             for (MethodNode method : classNode.methods) {
-                String methodName = FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(classNode.name, method.name, method.desc);
-                if (methodName.equals("drawScreen") || methodName.equals("func_73863_a")) {
+                if (method.name.equals("drawScreen")) {
                     InsnList list = new InsnList();
                     list.add(new TypeInsnNode(Opcodes.NEW, DrawEvent));
                     list.add(new InsnNode(Opcodes.DUP));
@@ -133,6 +132,9 @@ public class EssentialPartnerClassTransformer implements IClassTransformer {
                     list.add(skipYWrite);
                     list.add(new FrameNode(Opcodes.F_CHOP, 1, null, 0, null));
                     method.instructions.insertBefore(method.instructions.getFirst(), list);
+                    // Didn't compute actual need, 16 is just an arbitrary value deemed definitely big enough
+                    method.maxLocals = Math.max(method.maxLocals, 16);
+                    method.maxStack = Math.max(method.maxStack, 16);
                 }
             }
 

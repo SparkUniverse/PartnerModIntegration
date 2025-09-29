@@ -86,7 +86,7 @@ public class ModalManager {
         mousePosition = null;
     }
 
-    private void handlePreDraw(DrawEvent event) {
+    public void handleMousePos(DrawEvent event) {
         if (currentModal == null) return;
 
         setMousePosisiton(FAKE_MOUSE_POS, FAKE_MOUSE_POS);
@@ -160,9 +160,6 @@ public class ModalManager {
     //#if FABRIC
     //$$ public void registerEvents() {
     //$$     ScreenEvents.BEFORE_INIT.register(((client, screen, scaledWidth, scaledHeight) -> {
-    //$$         ScreenEvents.beforeRender(screen).register((screen1, matrices, mouseX, mouseY, tickDelta) -> {
-    //$$             handlePreDraw(new DrawEvent(mouseX, mouseY));
-    //$$         });
     //$$         ScreenEvents.afterRender(screen).register((screen1, matrices, mouseX, mouseY, tickDelta) -> {
     //$$             handleDraw(matrices);
     //$$         });
@@ -186,11 +183,6 @@ public class ModalManager {
     //#else
     //#if MC>=11900
     //$$ @SubscribeEvent
-    //$$ public void preDraw(ScreenEvent.Render.Pre event) {
-    //$$     handlePreDraw(new DrawEvent(event.getMouseX(), event.getMouseY()));
-    //$$ }
-    //$$
-    //$$ @SubscribeEvent
     //$$ public void draw(ScreenEvent.Render.Post event) {
         //#if MC>=12000
         //$$ handleDraw(event.getGuiGraphics());
@@ -210,11 +202,6 @@ public class ModalManager {
     //$$ }
     //#elseif MC>=11800
     //$$ @SubscribeEvent
-    //$$ public void preDraw(ScreenEvent.DrawScreenEvent.Pre event) {
-    //$$     handlePreDraw(new DrawEvent(event.getMouseX(), event.getMouseY()));
-    //$$ }
-    //$$
-    //$$ @SubscribeEvent
     //$$ public void draw(ScreenEvent.DrawScreenEvent.Post event) {
     //$$     handleDraw(event.getPoseStack());
     //$$ }
@@ -229,11 +216,6 @@ public class ModalManager {
     //$$     event.setCanceled(handleKeyTyped(event.getKeyCode()));
     //$$ }
     //#elseif MC>=11600
-    //$$ @SubscribeEvent
-    //$$ public void preDraw(GuiScreenEvent.DrawScreenEvent.Pre event) {
-    //$$     handlePreDraw(new DrawEvent(event.getMouseX(), event.getMouseY()));
-    //$$ }
-    //$$
     //$$ @SubscribeEvent
     //$$ public void draw(GuiScreenEvent.DrawScreenEvent.Post event) {
     //$$     handleDraw(event.getMatrixStack());
@@ -250,7 +232,7 @@ public class ModalManager {
     //$$ }
     //#else
     public static void preDraw(DrawEvent event) {
-        INSTANCE.handlePreDraw(event);
+        INSTANCE.handleMousePos(event);
     }
 
     public static void drawScreenPriority(
