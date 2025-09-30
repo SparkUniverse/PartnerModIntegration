@@ -8,7 +8,7 @@ pluginManagement {
         maven("https://maven.minecraftforge.net")
     }
     plugins {
-        id("gg.essential.multi-version.root") version "0.6.4"
+        id("gg.essential.multi-version.root") version "0.6.10"
     }
 }
 
@@ -58,7 +58,9 @@ listOf(
     "1.21.5-neoforge",
     "1.21.6-fabric",
     "1.21.7-fabric",
+    "1.21.7-neoforge",
     "1.21.8-fabric",
+    "1.21.8-neoforge",
     "1.21.9-fabric",
 ).forEach { version ->
     include(":$version")
