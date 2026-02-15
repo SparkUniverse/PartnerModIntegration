@@ -77,7 +77,11 @@ public class TwoButtonModal extends Modal {
                 EssentialPartner.CONFIG.hideButtons();
                 removed[0] = true;
                 ModalManager.INSTANCE.setModal(null);
+                //#if MC>=12111
+                //$$ MinecraftClient.getInstance().currentScreen.resize(UResolution.getScaledWidth(), UResolution.getScaledHeight());
+                //#else
                 Minecraft.getMinecraft().currentScreen.onResize(Minecraft.getMinecraft(), UResolution.getScaledWidth(), UResolution.getScaledHeight());
+                //#endif
             })
         ) {
             @Override

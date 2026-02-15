@@ -64,7 +64,7 @@ public class AdButton extends GuiButton {
 
     public AdButton(int x, int y, ResourceLocation texture, Consumer<GuiButton> onPress, String tooltip) {
         //#if MC>=11903
-        //$$ super(x, y, 20, 20, Text.literal(LABEL), onPress::accept, ButtonWidget.DEFAULT_NARRATION_SUPPLIER);
+        //$$ super(x, y, 20, 20, net.minecraft.text.Text.literal(LABEL), onPress::accept, ButtonWidget.DEFAULT_NARRATION_SUPPLIER);
         //#elseif MC>=11900
         //$$ super(x, y, 20, 20, Text.literal(LABEL), onPress::accept);
         //#elseif MC>=11600

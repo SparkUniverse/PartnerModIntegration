@@ -54,6 +54,7 @@ dependencies {
             12107 -> "0.128.1+1.21.7"
             12108 -> "0.129.0+1.21.8"
             12109 -> "0.133.13+1.21.9"
+            12111 -> "0.141.3+1.21.11"
             else -> error("Unable to determine fabric api version")
         }
 
@@ -69,7 +70,7 @@ dependencies {
         else -> error("Unable to determine DevAuth platform")
     }
 
-    modLocalRuntime("me.djtheredstoner:DevAuth-${devAuthPlatform}:1.2.1")
+    modLocalRuntime("me.djtheredstoner:DevAuth-${devAuthPlatform}:1.2.2")
 }
 
 val downloadContainer by tasks.registering(DownloadContainerTask::class) {
