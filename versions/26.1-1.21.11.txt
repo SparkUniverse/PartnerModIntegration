@@ -1,0 +1,4 @@
+net.minecraft.client.gui.GuiGraphicsExtractor net.minecraft.client.gui.DrawContext
+net.minecraft.client.gui.GuiGraphicsExtractor blit() drawTexture()
+net.minecraft.client.gui.GuiGraphicsExtractor text() drawText()
+net.minecraft.client.gui.components.AbstractButton extractContents() drawIcon()

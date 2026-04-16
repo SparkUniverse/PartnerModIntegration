@@ -162,9 +162,15 @@ public class ModalManager {
     //#if FABRIC
     //$$ public void registerEvents() {
     //$$     ScreenEvents.BEFORE_INIT.register(((client, screen, scaledWidth, scaledHeight) -> {
+    //#if MC >= 260100
+    //$$         ScreenEvents.afterExtract(screen).register(((screen1, graphics, mouseX, mouseY, tickProgress) -> {
+    //$$             handleDraw(graphics);
+    //$$         }));
+    //#else
     //$$         ScreenEvents.afterRender(screen).register((screen1, matrices, mouseX, mouseY, tickDelta) -> {
     //$$             handleDraw(matrices);
     //$$         });
+    //#endif
     //#if MC>=12109
     //$$         ScreenMouseEvents.allowMouseClick(screen).register((screen1, click) -> {
     //$$             return !handleMouseClick(click.x(), click.y());

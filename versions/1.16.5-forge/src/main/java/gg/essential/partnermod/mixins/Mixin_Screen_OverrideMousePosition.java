@@ -21,18 +21,29 @@ import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(GameRenderer.class)
 public class Mixin_Screen_OverrideMousePosition {
+    //#if MC>=260100
+    //$$ @Unique
+    //$$ private static final String RENDER_TARGET = "extractGui";
+    //$$ @Unique
+    //$$ private static final String SLICE_ARG = "stringValue=Extracting overlay render state";
+    //#else
+    @Unique
+    private static final String RENDER_TARGET = "updateCameraAndRender";
+    @Unique
+    private static final String SLICE_ARG = "stringValue=Rendering overlay";
+    //#endif
 
     @Unique
     private ModalManager.DrawEvent event;
 
     @ModifyVariable(
-        method = "updateCameraAndRender",
+        method = RENDER_TARGET,
         at = @At(
             value = "FIELD",
             target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/screen/Screen;",
             ordinal = 0
         ),
-        slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=Rendering overlay")),
+        slice = @Slice(from = @At(value = "CONSTANT", args = SLICE_ARG)),
         ordinal = 0
     )
     public int captureMouseX(int mouseX) {
@@ -41,13 +52,13 @@ public class Mixin_Screen_OverrideMousePosition {
     }
 
     @ModifyVariable(
-        method = "updateCameraAndRender",
+        method = RENDER_TARGET,
         at = @At(
             value = "FIELD",
             target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/screen/Screen;",
             ordinal = 0
         ),
-        slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=Rendering overlay")),
+        slice = @Slice(from = @At(value = "CONSTANT", args = SLICE_ARG)),
         ordinal = 1
     )
     public int captureMouseY(int mouseY) {
@@ -60,13 +71,13 @@ public class Mixin_Screen_OverrideMousePosition {
     //       but that doesn't matter for the FAKE_MOUSE_POS constant
 
     @ModifyVariable(
-        method = "updateCameraAndRender",
+        method = RENDER_TARGET,
         at = @At(
             value = "FIELD",
             target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/screen/Screen;",
             ordinal = 0
         ),
-        slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=Rendering overlay")),
+        slice = @Slice(from = @At(value = "CONSTANT", args = SLICE_ARG)),
         ordinal = 0
     )
     public int modifyMouseX(int mouseX) {
@@ -77,13 +88,13 @@ public class Mixin_Screen_OverrideMousePosition {
     }
 
     @ModifyVariable(
-        method = "updateCameraAndRender",
+        method = RENDER_TARGET,
         at = @At(
             value = "FIELD",
             target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/screen/Screen;",
             ordinal = 0
         ),
-        slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=Rendering overlay")),
+        slice = @Slice(from = @At(value = "CONSTANT", args = SLICE_ARG)),
         ordinal = 0
     )
     public int modifyMouseY(int mouseY) {

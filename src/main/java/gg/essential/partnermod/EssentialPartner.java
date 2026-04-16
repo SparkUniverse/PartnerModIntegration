@@ -82,7 +82,8 @@ public class EssentialPartner {
         "1.18", "1.18.1", "1.18.2",
         "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4",
         "1.20", "1.20.1", "1.20.2", "1.20.4", "1.20.6",
-        "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.11"
+        "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.11",
+        "26.1"
     ));
 
     private static final Set<String> NEOFORGE_SUPPORTED_VERSIONS = new HashSet<>(Arrays.asList(
@@ -321,9 +322,15 @@ public class EssentialPartner {
     }
     //#else
     //$$ private void afterScreenInit(MinecraftClient client, Screen screen, int scaledWidth, int scaledHeight) {
+    //#if MC >= 260100
+    //$$     createButton(screen, Screens.getWidgets(screen), (button, idx) -> {
+    //$$         Screens.getWidgets(screen).add(idx, button);
+    //$$     });
+    //#else
     //$$     createButton(screen, Screens.getButtons(screen), (button, idx) -> {
     //$$         Screens.getButtons(screen).add(idx, button);
     //$$     });
+    //#endif
     //$$ }
     //#endif
 

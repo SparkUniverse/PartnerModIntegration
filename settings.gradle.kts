@@ -8,7 +8,7 @@ pluginManagement {
         maven("https://maven.minecraftforge.net")
     }
     plugins {
-        id("gg.essential.multi-version.root") version "0.6.10"
+        id("gg.essential.multi-version.root") version "0.7.0-alpha.5"
     }
 }
 
@@ -64,11 +64,12 @@ listOf(
     "1.21.8-forge",
     "1.21.8-neoforge",
     "1.21.9-fabric",
-    "1.21.11-fabric"
+    "1.21.11-fabric",
+    "26.1-fabric"
 ).forEach { version ->
     include(":$version")
     project(":$version").apply {
-        projectDir = file("versions/$version")
+        projectDir = file("versions/$version").also { it.mkdirs() }
         buildFileName = "../../build.gradle.kts"
     }
 }
