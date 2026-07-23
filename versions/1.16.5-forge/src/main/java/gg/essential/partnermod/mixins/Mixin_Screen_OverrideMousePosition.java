@@ -12,24 +12,38 @@
 package gg.essential.partnermod.mixins;
 
 import gg.essential.partnermod.modal.ModalManager;
-import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Slice;
 
-@Mixin(GameRenderer.class)
+//#if MC >= 26.2
+//$$ @Mixin(net.minecraft.client.gui.Gui.class)
+//#else
+@Mixin(net.minecraft.client.renderer.GameRenderer.class)
+//#endif
 public class Mixin_Screen_OverrideMousePosition {
-    //#if MC>=260100
-    //$$ @Unique
+    @Unique
+    //#if MC >= 26.2
+    //$$ private static final String CURRENT_SCREEN = "Lnet/minecraft/client/gui/Gui;screen:Lnet/minecraft/client/gui/screens/Screen;";
+    //#else
+    private static final String CURRENT_SCREEN = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/screen/Screen;";
+    //#endif
+
+    @Unique
+    //#if MC >= 26.2
+    //$$ private static final String RENDER_TARGET = "extractRenderState";
+    //#elseif MC >= 26.1
     //$$ private static final String RENDER_TARGET = "extractGui";
-    //$$ @Unique
+    //#else
+    private static final String RENDER_TARGET = "updateCameraAndRender";
+    //#endif
+
+    @Unique
+    //#if MC >= 26.1
     //$$ private static final String SLICE_ARG = "stringValue=Extracting overlay render state";
     //#else
-    @Unique
-    private static final String RENDER_TARGET = "updateCameraAndRender";
-    @Unique
     private static final String SLICE_ARG = "stringValue=Rendering overlay";
     //#endif
 
@@ -40,7 +54,7 @@ public class Mixin_Screen_OverrideMousePosition {
         method = RENDER_TARGET,
         at = @At(
             value = "FIELD",
-            target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/screen/Screen;",
+            target = CURRENT_SCREEN,
             ordinal = 0
         ),
         slice = @Slice(from = @At(value = "CONSTANT", args = SLICE_ARG)),
@@ -55,7 +69,7 @@ public class Mixin_Screen_OverrideMousePosition {
         method = RENDER_TARGET,
         at = @At(
             value = "FIELD",
-            target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/screen/Screen;",
+            target = CURRENT_SCREEN,
             ordinal = 0
         ),
         slice = @Slice(from = @At(value = "CONSTANT", args = SLICE_ARG)),
@@ -74,7 +88,7 @@ public class Mixin_Screen_OverrideMousePosition {
         method = RENDER_TARGET,
         at = @At(
             value = "FIELD",
-            target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/screen/Screen;",
+            target = CURRENT_SCREEN,
             ordinal = 0
         ),
         slice = @Slice(from = @At(value = "CONSTANT", args = SLICE_ARG)),
@@ -91,7 +105,7 @@ public class Mixin_Screen_OverrideMousePosition {
         method = RENDER_TARGET,
         at = @At(
             value = "FIELD",
-            target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/screen/Screen;",
+            target = CURRENT_SCREEN,
             ordinal = 0
         ),
         slice = @Slice(from = @At(value = "CONSTANT", args = SLICE_ARG)),
