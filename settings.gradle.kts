@@ -8,7 +8,7 @@ pluginManagement {
         maven("https://maven.minecraftforge.net")
     }
     plugins {
-        id("gg.essential.multi-version.root") version "0.7.0-alpha.5"
+        id("gg.essential.multi-version.root") version "0.7.2"
     }
 }
 
